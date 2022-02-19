@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "itty-cors",
+  "version": "0.1.0",
+  "description": "Example repo for itty-cors",
+  "module": "./dist/index.mjs",
+  "scripts": {
+    "deploy": "wrangler publish",
+    "build": "esbuild index.js --format=esm --bundle --outfile=dist/index.mjs"
+  },
+  "author": "Kevin Whitley <krwhitley@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/wrangler": "^1.19.8",
+    "esbuild": "^0.14.23"
+  },
+  "dependencies": {
+    "itty-router": "^2.4.10",
+    "itty-router-extras": "^0.4.2"
+  }
+}

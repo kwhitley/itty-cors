@@ -1,0 +1,17 @@
+account_id = "YOUR CLOUDFLARE ACCOUNT ID"
+zone_id = "YOUR CLOUDFLARE ZONE ID"
+compatibility_date = "2022-02-19"
+name = "itty-cors"
+type = "javascript"
+workers_dev = false
+routes = [
+  "cors.itty-router.dev",
+  "cors.itty-router.dev/*"
+]
+
+[build]
+command = "npm install && npm run build"
+
+[build.upload]
+format = "modules"
+main = "./index.mjs"
