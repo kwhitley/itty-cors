@@ -13,10 +13,6 @@ export const createCors = (options?: CorsOptions) => {
     headers = {},
   } = options
 
-
-  // unroll existing headers to object
-  const mappedHeaders = (headers) => [...headers].reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
-
   const responseHeaders = {
     'content-type': 'application/json',
     'Access-Control-Allow-Origin': allowOrigin,
@@ -38,7 +34,7 @@ export const createCors = (options?: CorsOptions) => {
       // Handle CORS pre-flight request.
       // If you want to check or reject the requested method + headers
       // you can do that here.
-      let headers = {
+      const headers = {
         ...responseHeaders,
         'Access-Control-Allow-Methods': useMethods.join(', '),
         // Allow all future content Request headers to go back to browser
@@ -63,7 +59,7 @@ export const createCors = (options?: CorsOptions) => {
       return response // terminate immediately if CORS already set
     }
 
-    const { method, headers, status, body } = response
+    const { headers, status, body } = response
 
     return new Response(body, {
       status,

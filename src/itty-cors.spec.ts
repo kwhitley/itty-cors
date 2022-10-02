@@ -1,5 +1,3 @@
-import 'isomorphic-fetch'
-import fetchMock from 'fetch-mock'
 import { createCors } from './itty-cors'
 import { describe, expect, it } from 'vitest'
 
