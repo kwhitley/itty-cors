@@ -1,0 +1,68 @@
+{
+  "name": "itty-cors",
+  "version": "0.0.2",
+  "description": "Simple (and tiny) CORS-handling for any itty-router API.  Designed on Cloudflare Workers, but works anywhere.",
+  "sourceType": "module",
+  "main": "./dist/itty-cors.js",
+  "module": "./dist/itty-cors.mjs",
+  "types": "./dist/itty-cors.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/itty-cors.js",
+      "import": "./dist/itty-cors.mjs",
+      "types": "./dist/itty-cors.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "test": "vitest --coverage --reporter verbose",
+    "test:once": "vitest run",
+    "verify": "echo 'verifying module...' && run-s test:once build",
+    "dev": "run-p dev:*",
+    "dev:lint": "onchange -ik 'src/**/*.ts' -- yarn lint",
+    "dev:test": "yarn test --watch",
+    "coverage": "vitest run --coverage",
+    "coveralls": "yarn coverage && cat ./coverage/lcov.info | coveralls",
+    "format": "prettier src --write src",
+    "prerelease": "yarn verify",
+    "prebuild": "rimraf dist && mkdir dist",
+    "build": "tsup src/itty-cors.ts --format cjs,esm --minify --dts --clean",
+    "prepublishOnly": "yarn build",
+    "release": "release --tag --push --patch"
+  },
+  "keywords": [
+    "fetch",
+    "api",
+    "helper",
+    "tiny",
+    "json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kwhitley/itty-cors.git"
+  },
+  "author": "Kevin R. Whitley <krwhitley@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kwhitley/itty-cors/issues"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "@vitest/coverage-c8": "0.23.4",
+    "coveralls": "^3.1.1",
+    "esbuild": "^0.15.7",
+    "eslint": "^8.23.0",
+    "fs-extra": "^10.1.0",
+    "onchange": "7.1.0",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "tsup": "^6.2.3",
+    "typescript": "^4.8.3",
+    "uglify-js": "^3.17.0",
+    "vitest": "0.23.4",
+    "yarn": "^1.22.19",
+    "yarn-release": "^1.10.3"
+  }
+}
