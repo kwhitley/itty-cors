@@ -11,7 +11,7 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/kwhitley/itty-cors?style=social)](https://github.com/kwhitley/itty-cors)
 [![Twitter](https://img.shields.io/twitter/follow/kevinrwhitley.svg?style=social&label=Follow)](https://www.twitter.com/kevinrwhitley)
 
-Tiny CORS-handling for any itty-router API.  Designed on Cloudflare Workers, but works anywhere!
+Tiny CORS-handling for any [itty-router](https://npmjs.com/package/itty-router) API.  Designed on Cloudflare Workers, but works anywhere!
 
 ## Features
 - Granular control over allowed methods, origins, etc.
