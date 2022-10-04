@@ -1,5 +1,5 @@
 interface CorsOptions {
-  allowOrigin: string,
+  origins: string[],
   maxAge: number,
   methods: string[],
   headers: any,
@@ -7,15 +7,16 @@ interface CorsOptions {
 
 export const createCors = (options?: CorsOptions) => {
   const {
-    allowOrigin = '*',
+    origins = ['*'],
     maxAge = 3600,
     methods = ['GET'],
     headers = {},
   } = options
 
+  let allowOrigin
+
   const responseHeaders = {
     'content-type': 'application/json',
-    'Access-Control-Allow-Origin': allowOrigin,
     'Access-Control-Allow-Methods': methods.join(', '),
     'Access-Control-Max-Age': maxAge,
     ...headers,
@@ -24,48 +25,59 @@ export const createCors = (options?: CorsOptions) => {
   const preflight = (r) => {
     const useMethods = [...new Set(['OPTIONS', ...methods])]
 
-    // Make sure the necessary headers are present
-    // for this to be a valid pre-flight request
-    if (
-      r.headers.get('Origin') !== null &&
-      r.headers.get('Access-Control-Request-Method') !== null &&
-      r.headers.get('Access-Control-Request-Headers') !== null
-    ) {
-      // Handle CORS pre-flight request.
-      // If you want to check or reject the requested method + headers
-      // you can do that here.
-      const headers = {
-        ...responseHeaders,
-        'Access-Control-Allow-Methods': useMethods.join(', '),
-        // Allow all future content Request headers to go back to browser
-        // such as Authorization (Bearer) or X-Client-Name-Version
-        'Access-Control-Allow-Headers': r.headers.get('Access-Control-Request-Headers'),
+    const origin = r.headers.get('origin')
+
+    // set allowOrigin globally
+    allowOrigin = (origins.includes(origin) || origins.includes('*')) &&
+      { 'Access-Control-Allow-Origin': origin }
+    console.log('OPTIONS request, setting allowOrigin to', allowOrigin)
+
+    if (r.method === 'OPTIONS') {
+      // Make sure the necessary headers are present
+      // for this to be a valid pre-flight request
+      if (
+        r.headers.get('Origin') !== null &&
+        r.headers.get('Access-Control-Request-Method') !== null &&
+        r.headers.get('Access-Control-Request-Headers') !== null
+      ) {
+        // Handle CORS pre-flight request.
+        // If you want to check or reject the requested method + headers
+        // you can do that here.
+        const headers = {
+          ...responseHeaders,
+          'Access-Control-Allow-Methods': useMethods.join(', '),
+          'Access-Control-Allow-Headers': r.headers.get('Access-Control-Request-Headers'),
+          ...allowOrigin,
+        }
+
+        return new Response(null, { headers })
       }
 
-      return new Response(null, { headers })
+      // Handle standard OPTIONS request.
+      // If you want to allow other HTTP Methods, you can do that here.
+      return new Response(null, {
+        headers: {
+          Allow: useMethods.join(', '),
+        },
+      })
     }
-
-    // Handle standard OPTIONS request.
-    // If you want to allow other HTTP Methods, you can do that here.
-    return new Response(null, {
-      headers: {
-        Allow: useMethods.join(', '),
-      },
-    })
   }
 
   const corsify = (response) => {
-    if (response.headers.get('access-control-allow-origin')) {
+    const { headers, status, body } = response
+
+    if (headers.get('access-control-allow-origin') || [301, 302, 308].includes(status)) {
       return response // terminate immediately if CORS already set
     }
 
-    const { headers, status, body } = response
+    console.log('corsifying response', { allowOrigin })
 
     return new Response(body, {
       status,
       headers: {
         ...headers,
         ...responseHeaders,
+        ...allowOrigin,
       },
     })
   }

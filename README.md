@@ -18,6 +18,9 @@ Simple CORS-handling for any [itty-router](https://npmjs.com/package/itty-router
 - handles OPTIONS preflight requests
 - response processor (`corsify`) can be used per-response, or globally downstream
 
+## Pre v1.x API Changes
+- **v0.5.0** - options.allowOrigins: string --> option.origins: string[].  Example: `{ origins: ['*'] }`
+
 ## Simple Usage
 ```js
 import { Router } from 'itty-router'
@@ -40,12 +43,12 @@ router
 export default {
   fetch: (...args) => router
                         .handle(...args)
-                        .then(corsify)                  // inject CORS headers in all responses
-                        .catch(err => error(500, err.stack)),
+                        .catch(err => error(500, err.stack))
+                        .then(corsify) // cors should be applied to error responses as well
 }
 ```
 
-## Per-route Usage (with available options)
+## CORS enabled on a single route (and advanced options)
 ```js
 import { Router } from 'itty-router'
 import { error, json, missing } from 'itty-router-extras'
@@ -54,7 +57,7 @@ import { createCors } from 'itty-cors'
 // create CORS handlers
 const { preflight, corsify } = createCors({
   methods: ['GET', 'POST', 'DELETE'], // GET is included by default... omit this if only using GET
-  allowOrigin: '*',                   // defaults to allow all (most common).  Restrict if needed.
+  origins: ['*'],                     // defaults to allow all (most common).  Restrict if needed.
   maxAge: 3600,
   headers: {
     'my-custom-header': 'will be injected with each CORS-enabled response',
@@ -74,7 +77,7 @@ router
 export default {
   fetch: (...args) => router
                         .handle(...args)
-                        .catch(err => error(500, err.stack)),
+                        .catch(err => error(500, err.stack))
 }
 ```
 
@@ -85,7 +88,7 @@ Returns an object with two properties, `preflight` (a preflight OPTIONS middlewa
 
 | Option | Type(s) | Default | Description |
 | --- | --- | --- | --- |
-| **allowOrigin** | `string` | `'*'` | By default, all origins are allowed (most common).  Modify this to restrict to specific origins.
+| **origins** | `string[]` | `['*']` | By default, all origins are allowed (most common).  Modify this to restrict to specific origins.
 | **maxAge** | `number` | `3600` | Set the expiry of responses
 | **methods** | `string[]` | `['GET']` | Define which methods are allowed.  `OPTIONS` will be automatically added.
 | **headers** | `object` | `{}` | Add any custom headers to be injected with CORS-enabled responses.
