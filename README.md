@@ -14,6 +14,7 @@
 Simple CORS-handling for any [itty-router](https://npmjs.com/package/itty-router) API.  Designed on Cloudflare Workers, but works anywhere.
 
 ## Features
+- Tiny. Currently ~600 bytes, with zero-dependencies.
 - Granular control over allowed methods, origins, etc.
 - handles OPTIONS preflight requests
 - response processor (`corsify`) can be used per-response, or globally downstream
