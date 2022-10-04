@@ -20,7 +20,7 @@ Simple CORS-handling for any [itty-router](https://npmjs.com/package/itty-router
 
 ## !! Breaking API Changes (pre v1.x)!!
 You're using an early-access package.  Until itty-cors hits a stable v1.0 release, API changes will be broadcasted as minor version bumps.
-- **v0.5.0** - `allowOrigins: string` has been replaced with `origins: string[]` to accept an array of origins, and multi-origin support is now correctly implemented.
+- **v0.2.0** - `allowOrigins: string` has been replaced with `origins: string[]` to accept an array of origins, and multi-origin support is now correctly implemented.
   ```js
   // previously
   const { preflight, corsify } = createCors({ allowOrigin: '*' })
