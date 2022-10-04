@@ -18,8 +18,16 @@ Simple CORS-handling for any [itty-router](https://npmjs.com/package/itty-router
 - handles OPTIONS preflight requests
 - response processor (`corsify`) can be used per-response, or globally downstream
 
-## Pre v1.x API Changes
-- **v0.5.0** - options.allowOrigins: string --> option.origins: string[].  Example: `{ origins: ['*'] }`
+## !! Breaking API Changes (pre v1.x)!!
+You're using an early-access package.  Until itty-cors hits a stable v1.0 release, API changes will be broadcasted as minor version bumps.
+- **v0.5.0** - `allowOrigins: string` has been replaced with `origins: string[]` to accept an array of origins, and multi-origin support is now correctly implemented.
+  ```js
+  // previously
+  const { preflight, corsify } = createCors({ allowOrigin: '*' })
+
+  // now
+  const { preflight, corsify } = createCors({ origins: ['*'] })
+  ```
 
 ## Simple Usage
 ```js
