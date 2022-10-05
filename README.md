@@ -15,6 +15,7 @@ Simple CORS-handling for any [itty-router](https://npmjs.com/package/itty-router
 
 ## Features
 - Tiny. Currently ~600 bytes, with zero-dependencies.
+- Fully Typed/TypeScript
 - Granular control over allowed methods, origins, etc.
 - handles OPTIONS preflight requests
 - response processor (`corsify`) can be used per-response, or globally downstream
