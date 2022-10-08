@@ -30,7 +30,6 @@ export const createCors = (options?: CorsOptions) => {
     // set allowOrigin globally
     allowOrigin = (origins.includes(origin) || origins.includes('*')) &&
       { 'Access-Control-Allow-Origin': origin }
-    console.log('OPTIONS request, setting allowOrigin to', allowOrigin)
 
     if (r.method === 'OPTIONS') {
       // Make sure the necessary headers are present
@@ -69,8 +68,6 @@ export const createCors = (options?: CorsOptions) => {
     if (headers.get('access-control-allow-origin') || [301, 302, 308].includes(status)) {
       return response // terminate immediately if CORS already set
     }
-
-    console.log('corsifying response', { allowOrigin })
 
     return new Response(body, {
       status,

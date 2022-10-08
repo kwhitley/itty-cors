@@ -22,6 +22,7 @@ Simple CORS-handling for any [itty-router](https://npmjs.com/package/itty-router
 
 ## !! Breaking API Changes (pre v1.x)!!
 You're using an early-access package.  Until itty-cors hits a stable v1.0 release, API changes will be broadcasted as minor version bumps.
+- **v0.3.0** - `preflight` now **MUST** be included on the `.all` channel (all methods), rather than `.options` alone, to allow for origin-checking.
 - **v0.2.0** - `allowOrigins: string` has been replaced with `origins: string[]` to accept an array of origins, and multi-origin support is now correctly implemented.
   ```js
   // previously
@@ -44,7 +45,7 @@ const router = Router()
 
 // register v2 API plus all routes
 router
-  .options('*', preflight)                              // handle CORS preflight/OPTIONS requests
+  .all('*', preflight)                                  // handle CORS preflight/OPTIONS requests
   .get('/version', () => json({ version: '0.1.0' }))    // GET release version
   .get('/stuff', () => json(['foo', 'bar', 'baz']))     // GET some other random stuff
   .all('*', () => missing('Are you sure about that?'))  // 404 for all else
@@ -78,7 +79,7 @@ const router = Router()
 
 // register v2 API plus all routes
 router
-  .options('*', preflight)                              // handle CORS preflight/OPTIONS requests
+  .all('*', preflight)                                  // handle CORS preflight/OPTIONS requests
   .get('/version', () => corsify(json({ version: '0.1.0' })))  // GET release version (CORS-enabled)
   .get('/stuff', () => json(['foo', 'bar', 'baz']))     // GET some other random stuff (no CORS allowed)
   .all('*', () => missing('Are you sure about that?'))  // 404 for all else
