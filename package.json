@@ -1,6 +1,6 @@
 {
   "name": "itty-cors",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Simple (and tiny) CORS-handling for any itty-router API.  Designed on Cloudflare Workers, but works anywhere.",
   "sourceType": "module",
   "main": "./dist/itty-cors.js",

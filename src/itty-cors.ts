@@ -1,8 +1,8 @@
 interface CorsOptions {
-  origins: string[],
-  maxAge: number,
-  methods: string[],
-  headers: any,
+  origins?: string[],
+  maxAge?: number,
+  methods?: string[],
+  headers?: any,
 }
 
 export const createCors = (options?: CorsOptions) => {
@@ -22,9 +22,8 @@ export const createCors = (options?: CorsOptions) => {
     ...headers,
   }
 
-  const preflight = (r) => {
+  const preflight = (r: Request) => {
     const useMethods = [...new Set(['OPTIONS', ...methods])]
-
     const origin = r.headers.get('origin')
 
     // set allowOrigin globally
@@ -62,7 +61,7 @@ export const createCors = (options?: CorsOptions) => {
     }
   }
 
-  const corsify = (response) => {
+  const corsify = (response: Response): Response => {
     const { headers, status, body } = response
 
     if (headers.get('access-control-allow-origin') || [301, 302, 308].includes(status)) {
@@ -75,6 +74,7 @@ export const createCors = (options?: CorsOptions) => {
         ...headers,
         ...responseHeaders,
         ...allowOrigin,
+        'content-type': headers.get('content-type'),
       },
     })
   }
