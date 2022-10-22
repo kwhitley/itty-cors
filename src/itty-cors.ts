@@ -8,7 +8,7 @@ interface CorsOptions {
 export const createCors = (options?: CorsOptions) => {
   const {
     origins = ['*'],
-    maxAge = 3600,
+    maxAge,
     methods = ['GET'],
     headers = {},
   } = options
@@ -18,8 +18,11 @@ export const createCors = (options?: CorsOptions) => {
   const responseHeaders = {
     'content-type': 'application/json',
     'Access-Control-Allow-Methods': methods.join(', '),
-    'Access-Control-Max-Age': maxAge,
     ...headers,
+  }
+
+  if (maxAge) {
+    responseHeaders['Access-Control-Max-Age'] = maxAge
   }
 
   const preflight = (r: Request) => {
