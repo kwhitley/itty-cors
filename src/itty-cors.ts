@@ -64,17 +64,22 @@ export const createCors = (options?: CorsOptions) => {
     }
   }
 
-  const corsify = (response: Response): Response => {
-    const { headers, status, body } = response
+  type HeadersWithEntries = {
+    entries: Function,
+  } & Headers
 
-    if (headers.get('access-control-allow-origin') || [301, 302, 308].includes(status)) {
+  const corsify = (response: Response): Response => {
+    const { headers: HeadersWithEntries, status, body } = response
+    const existingHeaders = Object.fromEntries(headers.entries())
+
+    if (existingHeaders['access-control-allow-origin'] || [301, 302, 308].includes(status)) {
       return response // terminate immediately if CORS already set
     }
 
     return new Response(body, {
       status,
       headers: {
-        ...headers,
+        ...existingHeaders,
         ...responseHeaders,
         ...allowOrigin,
         'content-type': headers.get('content-type'),
