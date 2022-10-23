@@ -1,29 +1,24 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
-    "declaration": true,
-    "esModuleInterop": true,
-    "inlineSourceMap": false,
-    "lib": [
-      "esnext",
-      "dom"
-    ],
-    "listEmittedFiles": false,
-    "listFiles": false,
-    "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "pretty": true,
-    "resolveJsonModule": true,
-    "rootDir": "src",
-    "skipLibCheck": true,
-    "strict": false,
-    "traceResolution": false,
-    "module": "esnext",
-    "outDir": "dist/mjs",
-    "target": "esnext"
-  },
-  "exclude": ["node_modules", "dist", "**/*.spec.ts"],
-  "include": ["src"]
+	"include": ["src"],
+  "exclude": ["node_modules", "dist", "test"],
+	"compilerOptions": {
+		"target": "es2021",
+		"lib": [
+			"es2021"
+		],
+		"module": "es2022",
+		"moduleResolution": "node",
+		"types": [
+			"@cloudflare/workers-types"
+		],
+		"resolveJsonModule": true,
+		"allowJs": true,
+		"checkJs": false,
+		"noEmit": true, /* Disable emitting files from a compilation. */
+		"isolatedModules": true,
+		"allowSyntheticDefaultImports": true, /* Allow 'import x from y' when a module doesn't have a default export. */
+		"forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
+		"strict": false, /* Enable all strict type-checking options. */
+		"skipLibCheck": true /* Skip type checking all .d.ts files. */
+	}
 }
