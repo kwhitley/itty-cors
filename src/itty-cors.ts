@@ -81,11 +81,9 @@ export const createCors = (options?: CorsOptions) => {
         'content-type': headers.get('content-type'),
       },
     })
-    if (response.headers.has('set-cookie')) {
-      responseWithNewHeaders.headers.delete('set-cookie')
-      response.headers.getAll('set-cookie')
-        .map(cookie => responseWithNewHeaders.headers.append('set-cookie', cookie))
-    }
+    responseWithNewHeaders.headers.delete('set-cookie')
+    response.headers.getAll('set-cookie')
+      .map(cookie => responseWithNewHeaders.headers.append('set-cookie', cookie))
     return responseWithNewHeaders
   }
 
