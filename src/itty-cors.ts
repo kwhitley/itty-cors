@@ -65,7 +65,7 @@ export const createCors = (options?: CorsOptions) => {
   }
 
   const corsify = (response: Response): Response => {
-    const { headers, status, body } = response
+    const { headers, status, body, webSocket } = response
     const existingHeaders = Object.fromEntries(headers)
 
     if (existingHeaders['access-control-allow-origin'] || [301, 302, 308].includes(status)) {
@@ -74,6 +74,7 @@ export const createCors = (options?: CorsOptions) => {
 
     return new Response(body, {
       status,
+      webSocket,
       headers: {
         ...existingHeaders,
         ...responseHeaders,
