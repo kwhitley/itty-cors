@@ -65,6 +65,10 @@ export const createCors = (options?: CorsOptions) => {
   }
 
   const corsify = (response: Response): Response => {
+    if (!response) {
+      throw new Error('No fetch handler responded and no upstream to proxy to specified.');
+    }
+
     const { headers, status, body } = response
     const existingHeaders = Object.fromEntries(headers)
 

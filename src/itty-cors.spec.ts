@@ -6,3 +6,12 @@ describe('fetcher', () => {
     expect(typeof createCors).toBe('function')
   })
 })
+
+describe('corsify', () => {
+  it('throws when provided an unhandled request', () => {
+    const { corsify } = createCors({});
+    expect(corsify).toThrowErrorMatchingInlineSnapshot(
+      '"No fetch handler responded and no upstream to proxy to specified."',
+    );
+  })
+})
