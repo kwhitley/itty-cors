@@ -66,6 +66,9 @@ export const createCors = (options?: CorsOptions) => {
 
   const corsify = (response: Response): Response => {
     const { headers, status, body } = response
+
+    if (status === 101) return response // bypass for protocol shifts
+
     const existingHeaders = Object.fromEntries(headers)
 
     if (existingHeaders['access-control-allow-origin'] || [301, 302, 308].includes(status)) {
