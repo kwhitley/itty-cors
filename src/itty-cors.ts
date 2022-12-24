@@ -1,17 +1,14 @@
+import type { IRequest } from 'itty-router'
+
 interface CorsOptions {
-  origins?: string[],
-  maxAge?: number,
-  methods?: string[],
-  headers?: any,
+  origins?: string[]
+  maxAge?: number
+  methods?: string[]
+  headers?: any
 }
 
 export const createCors = (options?: CorsOptions) => {
-  const {
-    origins = ['*'],
-    maxAge,
-    methods = ['GET'],
-    headers = {},
-  } = options
+  const { origins = ['*'], maxAge, methods = ['GET'], headers = {} } = options
 
   let allowOrigin
 
@@ -25,13 +22,14 @@ export const createCors = (options?: CorsOptions) => {
     responseHeaders['Access-Control-Max-Age'] = maxAge
   }
 
-  const preflight = (r: Request) => {
+  const preflight = (r: IRequest) => {
     const useMethods = [...new Set(['OPTIONS', ...methods])]
     const origin = r.headers.get('origin')
 
     // set allowOrigin globally
-    allowOrigin = (origins.includes(origin) || origins.includes('*')) &&
-      { 'Access-Control-Allow-Origin': origin }
+    allowOrigin = (origins.includes(origin) || origins.includes('*')) && {
+      'Access-Control-Allow-Origin': origin,
+    }
 
     if (r.method === 'OPTIONS') {
       // Make sure the necessary headers are present
