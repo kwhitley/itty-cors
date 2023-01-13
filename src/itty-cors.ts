@@ -5,7 +5,7 @@ interface CorsOptions {
   headers?: any,
 }
 
-export const createCors = (options?: CorsOptions) => {
+export const createCors = (options?: CorsOptions = {}) => {
   const {
     origins = ['*'],
     maxAge,
