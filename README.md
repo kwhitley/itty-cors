@@ -105,9 +105,9 @@ Returns an object with two properties, `preflight` (a preflight OPTIONS middlewa
 | **headers** | `object` | `{}` | Add any custom headers to be injected with CORS-enabled responses.
 
 ### `preflight(request: Request) => Response`
-This is the preflight middleware to be injected upstream on options requests.
+This is the preflight middleware to be injected upstream on options requests. Since v0.3.0, `preflight` **MUST** be included on the `.all` channel (all methods), rather than `.options` alone, to allow for origin-checking.
 ```js
-router.options('*', preflight) // that's it!
+router.all('*', preflight) // that's it!
 ```
 
 ### `corsify(response: Response) => Response`
