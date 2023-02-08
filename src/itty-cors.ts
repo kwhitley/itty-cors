@@ -1,17 +1,12 @@
 interface CorsOptions {
-  origins?: string[],
-  maxAge?: number,
-  methods?: string[],
-  headers?: any,
+  origins?: string[]
+  maxAge?: number
+  methods?: string[]
+  headers?: any
 }
 
 export const createCors = (options?: CorsOptions) => {
-  const {
-    origins = ['*'],
-    maxAge,
-    methods = ['GET'],
-    headers = {},
-  } = options
+  const { origins = ['*'], maxAge, methods = ['GET'], headers = {} } = options
 
   let allowOrigin
 
@@ -30,8 +25,9 @@ export const createCors = (options?: CorsOptions) => {
     const origin = r.headers.get('origin')
 
     // set allowOrigin globally
-    allowOrigin = (origins.includes(origin) || origins.includes('*')) &&
-      { 'Access-Control-Allow-Origin': origin }
+    allowOrigin = (origins.includes(origin) || origins.includes('*')) && {
+      'Access-Control-Allow-Origin': origin,
+    }
 
     if (r.method === 'OPTIONS') {
       // Make sure the necessary headers are present
@@ -83,6 +79,7 @@ export const createCors = (options?: CorsOptions) => {
         ...allowOrigin,
         'content-type': headers.get('content-type'),
       },
+      webSocket: response.webSocket,
     })
   }
 
