@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/itty-cors.svg?style=flat-square)](https://npmjs.com/package/itty-cors)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/itty-cors?style=flat-square)](https://bundlephobia.com/result?p=itty-cors)
-![Build Status](https://img.shields.io/github/workflow/status/kwhitley/itty-cors/build?style=flat-square)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/kwhitley/itty-cors/verify.yml?branch=v0.x&style=flat-square)](https://github.com/kwhitley/itty-cors/actions/workflows/verify.yml)
 [![Coverage Status](https://img.shields.io/coveralls/github/kwhitley/itty-cors/v0.x?style=flat-square)](https://coveralls.io/github/kwhitley/itty-cors?branch=v0.x)
 [![NPM Weekly Downloads](https://img.shields.io/npm/dw/itty-cors?style=flat-square)](https://npmjs.com/package/itty-cors)
 [![Open Issues](https://img.shields.io/github/issues/kwhitley/itty-cors?style=flat-square)](https://github.com/kwhitley/itty-cors/issues)
