@@ -79,7 +79,7 @@ export const createCors = (options: CorsOptions = {}) => {
       return response // terminate immediately if CORS already set
     }
 
-    return new Response(body, {
+    const responseWithNewHeaders = new Response(body, {
       status,
       headers: {
         ...existingHeaders,
@@ -88,6 +88,10 @@ export const createCors = (options: CorsOptions = {}) => {
         'content-type': headers.get('content-type'),
       },
     })
+    responseWithNewHeaders.headers.delete('set-cookie')
+    response.headers.getAll('set-cookie')
+      .map(cookie => responseWithNewHeaders.headers.append('set-cookie', cookie))
+    return responseWithNewHeaders
   }
 
   return {
